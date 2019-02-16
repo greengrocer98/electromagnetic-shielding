@@ -1,0 +1,37 @@
+\input{pre/pregrapics}
+\pgfplotsset{width=15cm,height=10cm,compat=newest}
+\begin{document}
+\begin{tikzpicture}[
+	declare function={
+		strong(\f,\mu,\d,\sig) = 1/6/(\mu*3*10^9/sqrt(2*pi*\sig*\mu*2*pi*\f))*exp(\d/3/10^8*sqrt(2*pi*\sig*\mu*2*pi*\f));
+		weak(\f,\mu,\d,\sig) = sqrt((1+2/3*\d/0.1*(\mu-1)^2/\mu)^2+(2/3*0.1*\d/\mu/(3*10^8/sqrt(2*pi*\sig*\mu*2*pi*\f))^2)^2);
+	}
+]
+	\begin{loglogaxis}[
+	table/col sep = semicolon,
+	xlabel={$f$, Hz},
+	ylabel={$\eta_{\mu}$},
+	minor y tick num=2,
+	minor x tick num=4,
+	grid=both,
+	grid style={line width=.3pt, draw=gray!40},
+	major grid style={line width=.2pt,draw=black!40},
+	title={Латунь},
+	legend pos=north west,
+]
+	\pgfplotstableread{exp.csv}\exp;
+	\addplot[red,smooth,line width=.4pt, mark=*,mark size=2pt] table [x expr = \thisrowno{0},y expr = \thisrowno{1}] {\exp};
+	\addplot[red,,dashed,smooth,forget plot, domain=2000:10000, samples=30]{strong(x,1,0.002,1.5*10^17)};
+	\addplot[red,,dashed,smooth,forget plot, domain=20:1000, samples=30]{weak(x,1,0.002,1.5*10^17)};
+
+	\addplot[green,smooth,line width=.4pt,mark=*,mark size=2pt] table [x expr = \thisrowno{2},y expr = \thisrowno{3}] {\exp};
+	\addplot[green,dashed,smooth,forget plot, domain=2000:10000, samples=30]{strong(x,1,0.005,1.5*10^17)};
+	\addplot[green,dashed,smooth,forget plot, domain=20:1000, samples=30]{weak(x,1,0.005,1.5*10^17)};
+
+	\addplot[blue,smooth,line width=.4pt,mark=*,mark size=2pt,label=10 mm] table [x expr = \thisrowno{4},y expr = \thisrowno{5}] {\exp};
+	\addplot[blue,dashed,smooth,forget plot, domain=2000:10000, samples=30]{strong(x,1,0.01,1.5*10^17)};
+	\addplot[blue,dashed,smooth,forget plot, domain=20:1000, samples=30]{weak(x,1,0.01,1.5*10^17)};
+	\legend{2 mm, 5 mm, 10 mm}
+	\end{loglogaxis}
+\end{tikzpicture}
+\end{document}
