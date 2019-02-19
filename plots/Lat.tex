@@ -3,8 +3,8 @@
 \begin{document}
 \begin{tikzpicture}[
 	declare function={
-		strong(\f,\mu,\d,\sig) = 1/6/(\mu*3*10^9/sqrt(2*pi*\sig*\mu*2*pi*\f))*exp(\d/3/10^8*sqrt(2*pi*\sig*\mu*2*pi*\f));
-		weak(\f,\mu,\d,\sig) = sqrt((1+2/3*\d/0.1*(\mu-1)^2/\mu)^2+(2/3*0.1*\d/\mu/(3*10^8/sqrt(2*pi*\sig*\mu*2*pi*\f))^2)^2);
+		strong(\f,\mu,\d,\sig) = 1/6/(\mu*3*10^8/0.029/sqrt(2*pi*\sig*\mu*2*pi*\f))*exp(\d/3/10^8*sqrt(2*pi*\sig*\mu*2*pi*\f));
+		weak(\f,\mu,\d,\sig) = sqrt((1+2/3*\d/0.029*(\mu-1)^2/\mu)^2+(2/3*0.029*\d/\mu/(3*10^8/sqrt(2*pi*\sig*\mu*2*pi*\f))^2)^2);
 	}
 ]
 	\begin{loglogaxis}[
